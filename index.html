@@ -16,7 +16,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color:  #EFF5F1;
+            background-color:#EFF5F1;
             color: #3C4043;
         }
         .nav-link {
@@ -110,13 +110,6 @@
                     <p class="text-sm text-gray-500 mt-1">Fases</p>
                 </div>
             </div>
-            
-            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-left">
-                <h3 class="text-xl font-semibold mb-4">Objetivo General del Proyecto</h3>
-                <p class="text-gray-700 leading-relaxed">
-                    Realizar un estudio integral y multidisciplinario de la unidad geológica Dunita de Medellín para caracterizar su comportamiento y su relación con la ocurrencia de movimientos en masa, determinando la causa-raíz del desastre de Granizal (2025) y proponiendo medidas de estabilización y estrategias para la gestión del riesgo en las áreas en condición de amenaza o riesgo.
-                </p>
-            </div>
         </section>
 
         <section id="presentacion" class="mb-16">
@@ -129,7 +122,7 @@
         </section>
 
         <section id="justificacion" class="mb-16">
-            <h2 class="text-2xl font-bold mb-6 text-center">Justificación y Antecedentes</h2>
+            <h2 class="text-2xl font-bold mb-6 text-center">Justificación</h2>
             <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
                 <p>El Valle de Aburrá ha sido históricamente afectado por movimientos en masa de gran magnitud, muchos de ellos directamente relacionados con la Dunita de Medellín. Esta unidad geológica, por sus características geotécnicas e hidrogeológicas, presenta una alta susceptibilidad a la inestabilidad, un hecho trágicamente confirmado por desastres como los de <a href="https://i.pinimg.com/736x/82/23/6c/82236c8dcee0f3ee269018971eb2573b.jpg" class="link-highlight" target="_blank">Media Luna (1957)</a>, <a href="https://i.pinimg.com/736x/ab/58/35/ab583575956c74719fe012e80244c9ea.jpg" class="link-highlight" target="_blank">Santo Domingo (1974)</a>, <a href="https://i.pinimg.com/1200x/c3/d8/d7/c3d8d7d2ce7ab31af4603c116ff50b08.jpg" class="link-highlight" target="_blank">Villatina (1987)</a>, <a href="https://i.pinimg.com/1200x/ee/dd/ae/eeddae3e5c5541789f29e088bef15b14.jpg" class="link-highlight" target="_blank">Alto Verde (2008)</a>, <a href="https://i.pinimg.com/1200x/58/28/c4/5828c4803ebc30d37b6d26e19206fc42.jpg" class="link-highlight" target="_blank">La Gabriela (2010)</a> y <a href="#" class="link-highlight">La Presidenta (2011)</a>.</p>
                 
@@ -148,6 +141,14 @@
             </div>
         </section>
 
+        <section id="objetivo" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Ojetivo del Proyecto</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
+                <p>Realizar un estudio integral y multidisciplinario de la unidad geológica Dunita de Medellín para caracterizar su comportamiento y su relación con la ocurrencia de movimientos en masa, determinando la causa-raíz del desastre de Granizal (2025) y proponiendo medidas de estabilización y estrategias para la gestión del riesgo en las áreas en condición de amenaza o riesgo.
+                </p>
+            </div>
+        </section>
+
         <section id="alcance" class="mb-16">
             <h2 class="text-2xl font-bold mb-6 text-center">Alcance del Proyecto</h2>
             <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
@@ -161,8 +162,8 @@
             <h2 class="text-2xl font-bold mb-6 text-center">Metodología Detallada por Etapas</h2>
             <div class="flex justify-center mb-6">
                 <div class="inline-flex rounded-md shadow-sm" role="group">
-                    <button type="button" class="tab-button active px-6 py-3 text-sm font-medium bg-white border border-gray-200 rounded-l-lg" data-tab="etapa1">Etapa I</button>
-                    <button type="button" class="tab-button px-6 py-3 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-r-lg" data-tab="etapa2">Etapa II</button>
+                    <button type="button" class="tab-button active px-6 py-3 text-sm font-medium bg-white border border-gray-200 rounded-l-lg" data-tab="etapa1">Etapa I: 2025</button>
+                    <button type="button" class="tab-button px-6 py-3 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-r-lg" data-tab="etapa2">Etapa II: 2026</button>
                 </div>
             </div>
 
@@ -522,6 +523,9 @@
             slideshowImages[currentSlide].classList.add('opacity-100');
         }, 4000);
 
+        const monthLabels = ['Sep 25', 'Oct 25', 'Nov 25', 'Dic 25', 'Ene 26', 'Feb 26', 'Mar 26', 'Abr 26', 'May 26', 'Jun 26', 'Jul 26', 'Ago 26', 'Sep 26', 'Oct 26', 'Nov 26', 'Dic 26'];
+
+
         const cronogramaData = {
             labels: ['Fase 1: Cartografía', 'Fase 2: Geotecnia', 'Fase 3: Geofísica', 'Fase 4: Hidrogeología', 'Fase 5: Estabilidad', 'Fase 6: Obras', 'Fase 7: Geofísica Adv.', 'Fase 8: Mapas', 'Fase 9: Monitoreo'],
             datasets: [{
@@ -557,6 +561,14 @@
                     x: {
                         min: 0,
                         max: 16,
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                return monthLabels[value] || '';
+                            },
+                             autoSkip: false,
+                             maxRotation: 45,
+                             minRotation: 45
+                        },
                         title: { display: true, text: 'Meses del Proyecto' }
                     },
                     y: { grid: { display: false } }
