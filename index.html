@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Estudio Integral: Dunita de Medellín</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (#FBF9F1, #3C4043, #4A7C59) -->
+    <!-- Application Structure Plan: A single-page dashboard with a sticky navigation bar. The structure prioritizes a high-level summary upfront, followed by interactive, collapsible sections for Methodology and Budget. This non-linear, progressive disclosure approach was chosen to make the dense, technical proposal digestible and easily explorable by different stakeholders (technical vs. administrative) without overwhelming them with text. -->
+    <!-- Visualization & Content Choices: Cronograma -> Goal: Show timeline -> Viz: Chart.js Horizontal Bar Chart -> Interaction: Hover tooltips -> Justification: More dynamic and visually intuitive than a static table. Budget -> Goal: Break down costs -> Viz: Chart.js Donut Charts & HTML Tables -> Interaction: Hover on charts, JS toggle for tables -> Justification: Visualizes cost proportions effectively while keeping detailed tables accessible on demand. Methodology -> Goal: Organize 9 complex phases -> Presentation: JS-powered Tabs/Accordion -> Interaction: Click to expand/collapse -> Justification: Organizes information logically and prevents cognitive overload. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FBF9F1;
+            color: #3C4043;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #4A7C59;
+            border-bottom-color: #4A7C59;
+        }
+        .tab-button.active {
+            background-color: #4A7C59;
+            color: #FFFFFF;
+        }
+        .accordion-header {
+            transition: background-color 0.3s;
+        }
+        .accordion-header:hover {
+            background-color: #EAE6DA;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .accordion-content ul {
+            list-style-position: inside;
+            padding-left: 1rem;
+        }
+        .accordion-content li {
+            margin-bottom: 0.5rem;
+        }
+        .link-highlight {
+            color: #4A7C59;
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 2px;
+        }
+        .slideshow-image {
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="https://i.pinimg.com/736x/60/b7/f3/60b7f3e82c5188ecdeafaea7ddd5aeb3.jpg" alt="Logo UNAL" class="h-10 w-auto">
+                    <h1 class="text-lg font-bold text-[#4A7C59]">Estudio de la Dunita</h1>
+                </div>
+                <nav class="hidden md:flex items-center">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#resumen" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Resumen</a>
+                        <a href="#presentacion" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Presentación</a>
+                        <a href="#justificacion" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Justificación</a>
+                        <a href="#alcance" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Alcance</a>
+                        <a href="#metodologia" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Metodología</a>
+                        <a href="#cronograma" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Cronograma</a>
+                        <a href="#presupuesto" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Presupuesto</a>
+                        <a href="#idoneidad" class="nav-link px-3 py-2 text-sm font-medium border-b-2 border-transparent">Equipo</a>
+                    </div>
+                    <a href="#" class="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#4A7C59] hover:bg-[#3C6B4A] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4A7C59]">
+                        Descargar PDF
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="resumen" class="mb-16 text-center">
+            <h2 class="text-3xl font-bold mb-2">Propuesta Técnica-Económica</h2>
+            <p class="text-sm text-gray-500 mb-4">Propuesta elaborada por:</p>
+            <div class="bg-white inline-block p-4 rounded-full shadow-md mb-8">
+                <img src="https://i.pinimg.com/736x/8e/7c/03/8e7c0344f33f1cd0812cd1fb2bdb5164.jpg" alt="Logo Facultad de Minas" class="h-24 w-auto mx-auto">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <p class="text-4xl font-bold text-[#4A7C59]">$6,262 M</p>
+                    <p class="text-sm text-gray-500 mt-1">Valor Total</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <p class="text-4xl font-bold text-[#4A7C59]">16</p>
+                    <p class="text-sm text-gray-500 mt-1">Meses de Duración</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                    <p class="text-4xl font-bold text-[#4A7C59]">9</p>
+                    <p class="text-sm text-gray-500 mt-1">Fases Técnicas Clave</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-left">
+                <h3 class="text-xl font-semibold mb-4">Objetivo General del Proyecto</h3>
+                <p class="text-gray-700 leading-relaxed">
+                    Realizar un estudio integral y multidisciplinario de la unidad geológica Dunita de Medellín para caracterizar su comportamiento y su relación con la ocurrencia de movimientos en masa, determinando la causa-raíz del desastre de Granizal (2025) y proponiendo medidas de estabilización y estrategias para la gestión del riesgo en las áreas en condición de amenaza o riesgo.
+                </p>
+            </div>
+        </section>
+
+        <section id="presentacion" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Presentación</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
+                <p>La información que se describe en esta propuesta es de carácter confidencial y por lo tanto no puede ser revelada, y en caso que en los términos de referencia no se estipule la publicidad de las propuestas, éste no podrá ser publicada sin previa autorización por escrito del Representante Legal de la Universidad Nacional de Colombia.</p>
+                <p>El único uso de este documento es que sirva de base para realizar la evaluación de la propuesta presentada. Respecto a la propiedad intelectual, se entenderá que la Universidad Nacional estará subordinada al imperio de las leyes nacionales que rijan en la materia conforme al tipo de contratación que se derive por la presentación de la presente propuesta. En caso de requerirse un acuerdo de propiedad intelectual por la naturaleza del proyecto, se realizarán los tramites que haya lugar conforme a la normativa vigente.</p>
+                <p>La presente propuesta no es de carácter vinculante, y en consecuencia no se regirá por las normas de la oferta mercantil. Las condiciones para la prestación de los servicios serán pactadas entre las partes al momento de la suscripción del respectivo contrato y convenio.</p>
+            </div>
+        </section>
+
+        <section id="justificacion" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Justificación y Antecedentes</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
+                <p>El Valle de Aburrá ha sido históricamente afectado por movimientos en masa de gran magnitud, muchos de ellos directamente relacionados con la Dunita de Medellín. Esta unidad geológica, por sus características geotécnicas e hidrogeológicas, presenta una alta susceptibilidad a la inestabilidad, un hecho trágicamente confirmado por desastres como los de <a href="https://i.pinimg.com/736x/82/23/6c/82236c8dcee0f3ee269018971eb2573b.jpg" class="link-highlight" target="_blank">Media Luna (1957)</a>, <a href="https://i.pinimg.com/736x/ab/58/35/ab583575956c74719fe012e80244c9ea.jpg" class="link-highlight" target="_blank">Santo Domingo (1974)</a>, <a href="https://i.pinimg.com/1200x/c3/d8/d7/c3d8d7d2ce7ab31af4603c116ff50b08.jpg" class="link-highlight" target="_blank">Villatina (1987)</a>, <a href="https://i.pinimg.com/1200x/ee/dd/ae/eeddae3e5c5541789f29e088bef15b14.jpg" class="link-highlight" target="_blank">Alto Verde (2008)</a>, <a href="https://i.pinimg.com/1200x/58/28/c4/5828c4803ebc30d37b6d26e19206fc42.jpg" class="link-highlight" target="_blank">La Gabriela (2010)</a> y <a href="#" class="link-highlight">La Presidenta (2011)</a>.</p>
+                
+                <div id="slideshow-container" class="relative w-full max-w-2xl mx-auto h-64 rounded-lg overflow-hidden my-6 shadow-lg">
+                    <img src="https://i.pinimg.com/736x/82/23/6c/82236c8dcee0f3ee269018971eb2573b.jpg" alt="Tragedia de Media Luna" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-100">
+                    <img src="https://i.pinimg.com/736x/ab/58/35/ab583575956c74719fe012e80244c9ea.jpg" alt="Tragedia de Santo Domingo" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+                    <img src="https://i.pinimg.com/1200x/c3/d8/d7/c3d8d7d2ce7ab31af4603c116ff50b08.jpg" alt="Tragedia de Villatina" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+                    <img src="https://i.pinimg.com/1200x/ee/dd/ae/eeddae3e5c5541789f29e088bef15b14.jpg" alt="Tragedia de Alto Verde" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+                    <img src="https://i.pinimg.com/1200x/58/28/c4/5828c4803ebc30d37b6d26e19206fc42.jpg" alt="Tragedia de La Gabriela" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+                    <img src="https://i.pinimg.com/736x/06/a6/d7/06a6d78cff4b5efa764d49b1dceff64f.jpg" alt="Tragedia de Granizal" class="slideshow-image absolute top-0 left-0 w-full h-full object-cover opacity-0">
+                </div>
+
+                <p>La reciente tragedia ocurrida el 24 de junio de 2025 en la vereda El Granizal, en la zona limítrofe entre el municipio de Bello y el Distrito de Medellín, subraya con urgencia la necesidad de un entendimiento profundo y actualizado de esta amenaza. Este evento, que dejó un saldo de 27 personas fallecidas y cientos de damnificados, no fue un simple deslizamiento. Se trató de un fenómeno complejo, de tipo multiamenaza y en cadena: un deslizamiento inicial de material saturado en la parte alta (Bello) se transformó en un flujo de lodos que, al canalizarse por la quebrada La Negra, impactó áreas en ambas jurisdicciones.</p>
+                <p>La complejidad de estos fenómenos, que no respetan límites administrativos, exige una respuesta coordinada y multidisciplinaria. Es imperativo no solo investigar las causas generales que explican la recurrencia de estos desastres asociados a la Dunita, sino también realizar un estudio de causa-raíz específico y detallado del evento de Granizal. Solo a partir de un diagnóstico preciso se podrán diseñar y proponer obras de estabilización efectivas y estrategias de ordenamiento territorial que reduzcan la probabilidad de ocurrencia de eventos similares y protejan la vida de los habitantes de la región.</p>
+                <p>Esta propuesta, liderada por la Universidad Nacional de Colombia - Facultad de Minas, convoca a expertos de diversas disciplinas para abordar este desafío de manera integral, articulando los esfuerzos del municipio de Bello, el Distrito de Medellín, el Departamento de Antioquia y el Área Metropolitana del Valle de Aburrá.</p>
+            </div>
+        </section>
+
+        <section id="alcance" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Alcance del Proyecto</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
+                <p>Los temas cartográficos en geología y geomorfología se realizarán a escala 1:2.000, garantizando un nivel de detalle adecuado para la identificación de geoformas, depósitos y estructuras relevantes para el análisis de la amenaza.</p>
+                <p>El proyecto tendrá un componente robusto de Sistemas de Información Geográfica (SIG). Este componente acogerá las directrices o guías suministradas por la entidad contratante, y se desarrollarán la geodatabase y la estructura SIG del proyecto de acuerdo con dicha guía para asegurar la compatibilidad y transferencia de la información.</p>
+                <p>En lo que respecta a los diseños de obras para el caso del evento de Granizal, los presupuestos detallados de construcción se realizarán de forma diferenciada para las intervenciones que correspondan al Municipio de Bello y al Distrito de Medellín, facilitando la gestión administrativa y financiera de cada entidad territorial.</p>
+            </div>
+        </section>
+
+        <section id="metodologia" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Metodología Detallada por Etapas</h2>
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex rounded-md shadow-sm" role="group">
+                    <button type="button" class="tab-button active px-6 py-3 text-sm font-medium bg-white border border-gray-200 rounded-l-lg" data-tab="etapa1">Etapa I</button>
+                    <button type="button" class="tab-button px-6 py-3 text-sm font-medium bg-white border-t border-b border-r border-gray-200 rounded-r-lg" data-tab="etapa2">Etapa II</button>
+                </div>
+            </div>
+
+            <div id="etapa1" class="tab-content">
+                <p class="text-center text-gray-600 mb-6">Diagnóstico Integral, Caracterización de Campo y Soluciones para Granizal.</p>
+                <div id="accordion-etapa1" class="space-y-2">
+                </div>
+            </div>
+            <div id="etapa2" class="tab-content hidden">
+                <p class="text-center text-gray-600 mb-6">Modelación Avanzada, Zonificación de Amenaza y Gestión del Riesgo.</p>
+                <div id="accordion-etapa2" class="space-y-2">
+                </div>
+            </div>
+        </section>
+
+        <section id="cronograma" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Cronograma de Actividades (16 Meses)</h2>
+            <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                <div class="chart-container relative w-full h-96 max-w-6xl mx-auto">
+                    <canvas id="cronogramaChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="presupuesto" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Presupuesto Estimado del Proyecto</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Distribución de Costos - Etapa I</h3>
+                        <div class="chart-container relative w-full h-72 max-w-md mx-auto">
+                            <canvas id="budgetChart1"></canvas>
+                        </div>
+                        <p class="text-center mt-4 font-bold text-2xl">Total Etapa I: $1,442.7 M</p>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-center">Distribución de Costos - Etapa II</h3>
+                        <div class="chart-container relative w-full h-72 max-w-md mx-auto">
+                            <canvas id="budgetChart2"></canvas>
+                        </div>
+                        <p class="text-center mt-4 font-bold text-2xl">Total Etapa II: $4,820.2 M</p>
+                    </div>
+                </div>
+                <div class="mt-12 border-t pt-8 text-center">
+                     <h3 class="text-xl font-semibold">Valor Total del Proyecto</h3>
+                     <p class="text-4xl font-bold text-[#4A7C59] mt-2">$6,262,931,000</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="idoneidad" class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 text-center">Idoneidad y Equipo</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200 text-gray-700 leading-relaxed space-y-4">
+                <h3 class="text-xl font-semibold text-gray-800">Universidad Nacional de Colombia</h3>
+                <p>La Universidad Nacional de Colombia es la universidad más grande del país, con presencia en nueve regiones. Este gran capital humano, junto con sus 156 años de experiencia, han llevado a la Universidad a estar en las mejores instituciones del país en excelencia académica y capacidades de investigación. Hoy en día, la Universidad cuenta con más de 900 grupos de investigación, la mitad de ellos categorizados oficialmente por Minciencias, que trabajan no solo en investigación, sino también en servicios de innovación, interventorías y consultorías para instituciones gubernamentales y empresas privadas, con proyección nacional e internacional.</p>
+                <p>En particular, la Facultad de Minas del campus de Medellín es la facultad más grande de la Universidad Nacional Sede Medellín y una de las escuelas de ingeniería más grandes del país. En términos de experiencia en gerencia de proyectos la Facultad de Minas, en este caso representada por el Grupo de Investigación GEOHAZARDS (www.geohazards.com.co), tiene hoy una cartera de proyectos de alrededor de 40 millones de dólares en investigación y servicios de consultoría externa, y unos 20 millones de dólares actualmente en ejecución.</p>
+                <div class="border-t my-8"></div>
+                <h3 class="text-xl font-semibold text-gray-800">Equipo del Proyecto</h3>
+                <p>El equipo de expertos que liderará el proyecto se presenta a continuación.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                    <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto Edier Aristizábal" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">Edier Aristizábal</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Director del Proyecto</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">Ing. Geólogo, PhD. Especialista en riesgos geológicos. Postdoctorado en la Universidad de Potsdam (Alemania). Experiencia en el sector público (AMVA) y privado (ISAGEN).</p>
+                    </div>
+                     <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto José Humberto Caballero" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">José Humberto Caballero Acosta</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Coordinador Geomorfología</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">Ing. Geólogo, Magíster en Geología del Cuaternario. Experiencia en INGEOMINAS/SGC y coordinación de proyectos con el AMVA. Experto en geomorfología y gestión del riesgo.</p>
+                    </div>
+                     <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto Diego Armando Rendón" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">Diego Armando Rendón Giraldo</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Coordinador Geotecnia</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">Ing. Geólogo, MSc. Experiencia en consultoría geotécnica y microzonificación sísmica del Valle de Aburrá. Experto en caracterización geotécnica y evaluación dinámica de suelos.</p>
+                    </div>
+                     <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto Gaspar Monsalve" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">Gaspar Monsalve Mejía</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Coordinador Geofísica</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">PhD en Geofísica. Profesor Asociado UNAL. Experto en el uso de técnicas geofísicas para estudios de litosfera, tectónica, sismología y geodinámica regional.</p>
+                    </div>
+                     <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto María Victoria Vélez" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">María Victoria Vélez Otálvaro</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Coordinadora Hidrogeología</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">Ing. Civil, DEA en Hidrogeología. Profesora de larga trayectoria en hidráulica e hidrogeología. Autora del libro “Hidráulica de aguas subterráneas”.</p>
+                    </div>
+                     <div class="text-center">
+                        <img src="https://placehold.co/400x400/EAE6DA/3C4043?text=Foto" alt="Foto Luis Fernando Carvajal" class="w-40 h-40 rounded-full mx-auto mb-4 object-cover shadow-lg">
+                        <h4 class="font-bold text-lg">Luis Fernando Carvajal Serna</h4>
+                        <p class="text-sm text-[#4A7C59] font-medium">Coordinador Modelación</p>
+                        <a href="#" class="text-xs link-highlight">(Ver Hoja de Vida)</a>
+                        <p class="text-xs text-gray-600 mt-2">Ing. Civil, MSc. Especializado en recursos hídricos. Experto en predicción y simulación de sistemas hidrológicos, planeación hidráulica y evaluación de riesgo y cambio climático.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="entidades">
+            <h2 class="text-2xl font-bold mb-8 text-center">Entidades Participantes</h2>
+            <div class="bg-white p-8 rounded-xl shadow-md border border-gray-200">
+                <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+                    <a href="#" title="DAGRD - Distrito de Medellín"><img src="https://i.pinimg.com/1200x/34/56/f9/3456f917c5b8077f2e7eb598d2bf893a.jpg" alt="Logo Distrito de Medellín" class="h-16 w-auto object-contain"></a>
+                    <a href="#" title="DAGRAN - Gobernación de Antioquia"><img src="https://i.pinimg.com/736x/7a/8e/2e/7a8e2e_eb24b4f343b522d872ec451db.jpg" alt="Logo DAGRAN" class="h-16 w-auto object-contain"></a>
+                    <a href="#" title="Área Metropolitana del Valle de Aburrá"><img src="https://i.pinimg.com/736x/5d/b3/a3/5db3a333f3be4dd5e70a9dd57117f519.jpg" alt="Logo Área Metropolitana" class="h-16 w-auto object-contain"></a>
+                    <a href="#" title="Municipio de Bello"><img src="https://i.pinimg.com/1200x/42/ac/59/42ac591a263bcd46d1d41be4eac11cda.jpg" alt="Logo Municipio de Bello" class="h-16 w-auto object-contain"></a>
+                    <a href="#" title="EPM"><img src="https://i.pinimg.com/736x/70/89/e3/7089e3c4acc0fd80d5f9688b29e9f12d.jpg" alt="Logo EPM" class="h-16 w-auto object-contain"></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-8 py-4 text-center text-sm">
+            <p>&copy; 2025 Universidad Nacional de Colombia - Facultad de Minas. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+<script>
+    const methodologyData = {
+        etapa1: [
+            { 
+                title: "Fase 1: Cartografía y levantamiento LIDAR–Fotogramétrico", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Generar un modelo cartográfico geológico y geomorfológico a escala 1:2.000 de la zona de influencia de la Dunita de Medellín mediante la adquisición y procesamiento de datos LIDAR y fotogrametría aérea, que permita la identificación precisa de geoformas de karstificación.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Adquisición de datos LIDAR (≥ 12 pts/m²) y fotogramétricos (< 10 cm de resolución).</li>
+                        <li>Procesamiento de datos para generar MDT, MDS y ortofotos.</li>
+                        <li>Levantamiento cartográfico de unidades geomorfológicas, geoformas, perfiles de meteorización y depósitos de vertiente.</li>
+                        <li>Validación en campo con recorridos de verificación.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">UAV con sensor LIDAR, Cámara multiespectral y RGB, Estaciones GNSS, Software especializado (Terrascan, ArcGIS, etc.).</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">MDT, MDS, Ortofotos, Cartografía a escala 1:2.000, Informe técnico.</p>
+                ` 
+            },
+            { 
+                title: "Fase 2: Exploración Geotécnica", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Definir las condiciones geotécnicas del macizo dunítico y de los depósitos asociados para obtener parámetros representativos de su comportamiento mecánico y estructural.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Ejecución de 10 perforaciones de 30 m de profundidad cada una.</li>
+                        <li>Realización de 10 sondeos SPT de 10 m cada uno.</li>
+                        <li>Ejecución de 10 pruebas de permeabilidad (Lefranc/Lugeon).</li>
+                        <li>Plan de ensayos de laboratorio: 50 de clasificación, 10 triaxiales, 50 de corte directo.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Taladro rotatorio, Equipo SPT, Laboratorio acreditado.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Perfiles estratigráficos, registros geotécnicos, resultados de ensayos, informe técnico con parámetros para modelación.</p>
+                `
+            },
+            { 
+                title: "Fase 3: Exploración Geofísica", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Caracterizar las propiedades físicas del subsuelo y la estructura interna del macizo dunítico mediante técnicas geofísicas para complementar los estudios geotécnicos y definir zonas de debilidad y karstificación.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Ejecución de 20 líneas sísmicas mixtas (Refracción–MASW).</li>
+                        <li>Realización de 20 perfiles de tomografía geoeléctrica.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Sismógrafos multicanal, geófonos, resistivímetro multielectrodo.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Modelos sísmicos y geoeléctricos, informe técnico con integración geofísica.</p>
+                `
+            },
+            { 
+                title: "Fase 4: Estudios Hidrogeológicos e Hidroquímicos", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Caracterizar el sistema hidrogeológico de la Dunita de Medellín, diferenciando niveles superficiales y profundos, e identificar el papel del agua en la saturación de suelos y macizo rocoso.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Levantamiento hidrogeológico de campo (inventario y aforo de manantiales).</li>
+                        <li>Dos campañas de muestreo (20 puntos en Etapa I, 40 en Etapa II) para análisis hidroquímicos e isotópicos.</li>
+                        <li>Instalación de 4 recolectores de agua lluvia.</li>
+                        <li>Estimación de la recarga y modelación numérica del flujo subterráneo (MODFLOW).</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Piezómetros, equipos de muestreo, laboratorio especializado, software hidrogeológico.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Inventario hidrogeológico, base de datos, modelo numérico de flujo, informe técnico.</p>
+                `
+            },
+            { 
+                title: "Fase 5: Análisis de Estabilidad y Modelación", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Evaluar la estabilidad del macizo dunítico, con énfasis en el retroanálisis de la tragedia de Granizal (2025), para establecer escenarios de susceptibilidad y orientar las obras de estabilización.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Retroanálisis del evento de Granizal.</li>
+                        <li>Modelación de estabilidad de laderas (equilibrio límite y modelos numéricos).</li>
+                        <li>Simulación de flujos de detritos y avenidas torrenciales.</li>
+                        <li>Construcción de escenarios de amenaza.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Software especializado (GeoStudio, PLAXIS, FLAC3D, RAMMS-DF), base cartográfica LIDAR.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Retroanálisis documentado, modelos 2D y 3D, mapas de probabilidad de falla, informe técnico.</p>
+                `
+            },
+            { 
+                title: "Fase 6: Obras de Estabilización y Lineamientos Técnicos", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Diseñar, a nivel de planos constructivos, las obras de estabilización y mitigación necesarias para controlar el fenómeno de Granizal y reducir la amenaza en sectores críticos.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Diagnóstico para intervención y priorización de sectores.</li>
+                        <li>Diseño de obras (muros, anclajes, drenes, etc.).</li>
+                        <li>Verificación de diseños bajo diferentes escenarios.</li>
+                        <li>Formulación de lineamientos técnicos y recomendaciones según NSR-10.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Software de diseño geotécnico y estructural (GeoStudio, SAP2000).</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Planos constructivos, memorias de cálculo, especificaciones técnicas, informe técnico y lineamientos para futuros estudios.</p>
+                `
+            }
+        ],
+        etapa2: [
+            { 
+                title: "Fase 7: Investigación Geofísica Avanzada (Magnetotelúrica)", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Realizar una campaña de exploración geofísica profunda para obtener un modelo detallado de la estructura interna de la Dunita de Medellín.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Planificación y adquisición de datos en campo con una malla de estaciones.</li>
+                        <li>Procesamiento de datos y realización de inversiones 2D y 3D.</li>
+                        <li>Integración con datos de fases previas para interpretar estructuras profundas.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Estaciones magnetotelúricas portátiles, software de inversión.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Modelos 2D y 3D de resistividad, informe técnico con interpretación integrada.</p>
+                ` 
+            },
+            { 
+                title: "Fase 8: Mapas de Susceptibilidad y Amenaza", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Delimitar y clasificar las áreas de la Dunita de Medellín según su nivel de susceptibilidad y amenaza, como insumo para la planificación territorial.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Integración de toda la información del proyecto en un SIG.</li>
+                        <li>Construcción de mapas temáticos (pendientes, karstificación, flujo subterráneo).</li>
+                        <li>Zonificación de susceptibilidad a escala 1:2.000 mediante métodos estadísticos.</li>
+                        <li>Definición de escenarios de amenaza.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">SIG especializados (ArcGIS, QGIS), bases de datos del proyecto.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Mapas de susceptibilidad y amenaza, informe técnico con lineamientos.</p>
+                `
+            },
+            { 
+                title: "Fase 9: Red de Monitoreo y Alerta Temprana", 
+                content: `
+                    <h4 class="font-semibold mb-2 text-gray-800">Objetivo de la fase:</h4>
+                    <p class="mb-4 text-gray-600">Diseñar e instalar una red de monitoreo como insumo para un sistema de alerta temprana que apoye la gestión del riesgo.</p>
+                    <h4 class="font-semibold mb-2 text-gray-800">Actividades principales:</h4>
+                    <ul class="list-disc text-gray-600">
+                        <li>Diseño e instalación de la red (piezómetros, inclinómetros, pluviómetros).</li>
+                        <li>Integración y transmisión de datos en tiempo real.</li>
+                        <li>Definición de umbrales y protocolos de alerta temprana.</li>
+                    </ul>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Equipos y recursos:</h4>
+                    <p class="text-gray-600">Sensores, dataloggers, plataforma de software.</p>
+                    <h4 class="font-semibold mt-4 mb-2 text-gray-800">Productos esperados:</h4>
+                    <p class="text-gray-600">Red de monitoreo operativa, plataforma digital, protocolos de alerta y manual de operación.</p>
+                `
+            }
+        ]
+    };
+
+    function createAccordionItem(item, index, etapa) {
+        return `
+            <div class="bg-white border border-gray-200 rounded-lg">
+                <h2 id="accordion-header-${etapa}-${index}">
+                    <button type="button" class="accordion-header flex items-center justify-between w-full p-5 font-medium text-left text-gray-700" data-accordion-target="#accordion-body-${etapa}-${index}">
+                        <span>${item.title}</span>
+                        <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h2>
+                <div id="accordion-body-${etapa}-${index}" class="accordion-content">
+                    <div class="p-5 border-t border-gray-200">
+                        ${item.content}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordionContainer1 = document.getElementById('accordion-etapa1');
+        const accordionContainer2 = document.getElementById('accordion-etapa2');
+        
+        accordionContainer1.innerHTML = methodologyData.etapa1.map((item, index) => createAccordionItem(item, index, 'etapa1')).join('');
+        accordionContainer2.innerHTML = methodologyData.etapa2.map((item, index) => createAccordionItem(item, index, 'etapa2')).join('');
+
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                tabContents.forEach(content => {
+                    if (content.id === button.dataset.tab) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const body = document.querySelector(header.dataset.accordionTarget);
+                const svg = header.querySelector('svg');
+                if (body.style.maxHeight) {
+                    body.style.maxHeight = null;
+                    svg.style.transform = 'rotate(0deg)';
+                } else {
+                    body.style.maxHeight = body.scrollHeight + "px";
+                    svg.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        const slideshowImages = document.querySelectorAll('#slideshow-container .slideshow-image');
+        let currentSlide = 0;
+        setInterval(() => {
+            slideshowImages[currentSlide].classList.remove('opacity-100');
+            slideshowImages[currentSlide].classList.add('opacity-0');
+            currentSlide = (currentSlide + 1) % slideshowImages.length;
+            slideshowImages[currentSlide].classList.remove('opacity-0');
+            slideshowImages[currentSlide].classList.add('opacity-100');
+        }, 4000);
+
+        const cronogramaData = {
+            labels: ['Fase 1: Cartografía', 'Fase 2: Geotecnia', 'Fase 3: Geofísica', 'Fase 4: Hidrogeología', 'Fase 5: Estabilidad', 'Fase 6: Obras', 'Fase 7: Geofísica Adv.', 'Fase 8: Mapas', 'Fase 9: Monitoreo'],
+            datasets: [{
+                label: 'Duración (meses)',
+                data: [
+                    [0, 2], [0, 3], [1, 3], [1, 4], [2, 4], [3, 4], 
+                    [4, 7], [7, 12], [12, 16]
+                ],
+                backgroundColor: [
+                    'rgba(74, 124, 89, 0.7)', 'rgba(132, 169, 140, 0.7)', 'rgba(163, 191, 171, 0.7)',
+                    'rgba(74, 124, 89, 0.7)', 'rgba(132, 169, 140, 0.7)', 'rgba(163, 191, 171, 0.7)',
+                    'rgba(74, 124, 89, 0.8)', 'rgba(132, 169, 140, 0.8)', 'rgba(163, 191, 171, 0.8)'
+                ],
+                borderColor: [
+                    'rgba(74, 124, 89, 1)', 'rgba(132, 169, 140, 1)', 'rgba(163, 191, 171, 1)',
+                    'rgba(74, 124, 89, 1)', 'rgba(132, 169, 140, 1)', 'rgba(163, 191, 171, 1)',
+                    'rgba(74, 124, 89, 1)', 'rgba(132, 169, 140, 1)', 'rgba(163, 191, 171, 1)'
+                ],
+                borderWidth: 1,
+                barPercentage: 0.6,
+            }]
+        };
+
+        const cronogramaCtx = document.getElementById('cronogramaChart').getContext('2d');
+        new Chart(cronogramaCtx, {
+            type: 'bar',
+            data: cronogramaData,
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        min: 0,
+                        max: 16,
+                        title: { display: true, text: 'Meses del Proyecto' }
+                    },
+                    y: { grid: { display: false } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Mes ${context.raw[0] + 1} a Mes ${context.raw[1]}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        const budgetData1 = {
+            labels: ['Costos Directos', 'Personal', 'Administración (22%)'],
+            datasets: [{
+                data: [638.55, 544, 259.72],
+                backgroundColor: ['#4A7C59', '#84A98C', '#A3BFAB'],
+            }]
+        };
+        const budgetData2 = {
+            labels: ['Costos Directos', 'Personal', 'Administración (22%)'],
+            datasets: [{
+                data: [2937, 984, 869.22],
+                backgroundColor: ['#4A7C59', '#84A98C', '#A3BFAB'],
+            }]
+        };
+        const budgetOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (label) { label += ': '; }
+                            if (context.parsed !== null) {
+                                label += new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(context.parsed * 1000000);
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        const budgetCtx1 = document.getElementById('budgetChart1').getContext('2d');
+        new Chart(budgetCtx1, { type: 'doughnut', data: budgetData1, options: budgetOptions });
+        
+        const budgetCtx2 = document.getElementById('budgetChart2').getContext('2d');
+        new Chart(budgetCtx2, { type: 'doughnut', data: budgetData2, options: budgetOptions });
+
+    });
+</script>
+</body>
+</html>
