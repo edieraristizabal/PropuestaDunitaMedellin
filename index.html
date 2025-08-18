@@ -220,6 +220,37 @@
                 <h3 class="text-xl font-semibold text-gray-800">Universidad Nacional de Colombia</h3>
                 <p>La Universidad Nacional de Colombia es la universidad más grande del país, con presencia en nueve regiones. Este gran capital humano, junto con sus 156 años de experiencia, han llevado a la Universidad a estar en las mejores instituciones del país en excelencia académica y capacidades de investigación. Hoy en día, la Universidad cuenta con más de 900 grupos de investigación, la mitad de ellos categorizados oficialmente por Minciencias, que trabajan no solo en investigación, sino también en servicios de innovación, interventorías y consultorías para instituciones gubernamentales y empresas privadas, con proyección nacional e internacional.</p>
                 <p>En particular, la Facultad de Minas del campus de Medellín es la facultad más grande de la Universidad Nacional Sede Medellín y una de las escuelas de ingeniería más grandes del país. En términos de experiencia en gerencia de proyectos la Facultad de Minas, en este caso representada por el Grupo de Investigación GEOHAZARDS (www.geohazards.com.co), tiene hoy una cartera de proyectos de alrededor de 40 millones de dólares en investigación y servicios de consultoría externa, y unos 20 millones de dólares actualmente en ejecución.</p>
+                
+                 <div class="border-t my-8"></div>
+                
+                <div id="experiencia-accordion">
+                    <div class="bg-white border border-gray-200 rounded-lg">
+                        <h2 id="accordion-header-experiencia">
+                            <button type="button" class="accordion-header flex items-center justify-between w-full p-5 font-medium text-left text-gray-700" data-accordion-target="#accordion-body-experiencia">
+                                <span>Experiencia Específica del Director del Proyecto</span>
+                                <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                        </h2>
+                        <div id="accordion-body-experiencia" class="accordion-content">
+                            <div class="p-5 border-t border-gray-200 overflow-x-auto">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3">Proyecto</th>
+                                            <th scope="col" class="px-3 py-3 text-center">Amenaza</th>
+                                            <th scope="col" class="px-3 py-3 text-center">Vulnerabilidad</th>
+                                            <th scope="col" class="px-3 py-3 text-center">Riesgo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="experiencia-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
                 <div class="border-t my-8"></div>
                 <h3 class="text-xl font-semibold text-gray-800">Equipo del Proyecto</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
@@ -456,6 +487,19 @@
         ]
     };
 
+    const experienciaData = [
+        { name: 'Actualización del mapa nacional de amenaza por movimientos en masa a escala 1:25.000. Bloque 5', time: '10 meses', value: '2.019.367.252', client: 'Servicio Geológico Colombiano', a: true, v: false, r: false },
+        { name: 'Evaluación de la susceptibilidad, amenaza, vulnerabilidad y riesgo por avenidas torrenciales en Antioquia', time: '8 meses', value: '551.652.000', client: 'DAGRAN', a: true, v: true, r: true },
+        { name: 'Evaluación de la susceptibilidad, amenaza, vulnerabilidad y riesgo por movimientos en masa en Antioquia', time: '4 meses', value: '1.034.560.000', client: 'DAGRAN', a: true, v: true, r: true },
+        { name: 'Guía metodológica para la gestión de riesgos asociados a la geodinámica externa', time: '11 meses', value: '680.850.159', client: 'ISA', a: true, v: true, r: true },
+        { name: 'Estudios de prefactibilidad y factibilidad para los proyectos de vivienda en los ETCRs', time: '5 meses', value: '1.987.133.401', client: 'Ministerio de Vivienda', a: true, v: true, r: true },
+        { name: 'Prefactibilidad para viabilidad de proyectos de vivienda en Acacías (Meta)', time: '5 meses', value: '589.747.800', client: 'ARN', a: true, v: true, r: true },
+        { name: 'Estudios básicos de amenaza y de detalle por avenidas torrenciales en Dabeiba-Antioquia', time: '7 meses', value: '583.092.820', client: 'DAGRAN', a: true, v: true, r: true },
+        { name: 'Estudios de prefactibilidad y factibilidad para viabilidad de proyectos de vivienda en AETCR', time: '13 meses', value: '3.222.709.653', client: 'PNUD', a: true, v: true, r: true },
+        { name: 'Estudios de amenaza a nivel de detalle en Valparaiso-Antioquia', time: '3 meses', value: '475.240.950', client: 'DAGRAN', a: true, v: false, r: false },
+        { name: 'Estudios básicos de amenaza en 7 municipios del Valle de Aburrá', time: '15 meses', value: '1.694.755.000', client: 'AMVA', a: true, v: false, r: false },
+    ];
+
     function createAccordionItem(item, index, etapa) {
         return `
             <div class="bg-white border border-gray-200 rounded-lg">
@@ -480,6 +524,22 @@
         
         accordionContainer1.innerHTML = methodologyData.etapa1.map((item, index) => createAccordionItem(item, index, 'etapa1')).join('');
         accordionContainer2.innerHTML = methodologyData.etapa2.map((item, index) => createAccordionItem(item, index, 'etapa2')).join('');
+
+        const experienciaTableBody = document.getElementById('experiencia-table-body');
+        experienciaData.forEach(p => {
+            const row = document.createElement('tr');
+            row.className = 'bg-white border-b';
+            row.innerHTML = `
+                <td class="px-6 py-4">
+                    <p class="font-semibold text-gray-800">${p.name}</p>
+                    <p class="text-xs text-gray-500">Tiempo: ${p.time} | Valor: $${p.value} | Entidad: ${p.client}</p>
+                </td>
+                <td class="px-3 py-4 text-center text-green-600">${p.a ? '✔' : ''}</td>
+                <td class="px-3 py-4 text-center text-green-600">${p.v ? '✔' : ''}</td>
+                <td class="px-3 py-4 text-center text-green-600">${p.r ? '✔' : ''}</td>
+            `;
+            experienciaTableBody.appendChild(row);
+        });
 
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
